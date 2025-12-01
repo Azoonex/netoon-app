@@ -1,13 +1,24 @@
-import Loading from "@/components/layout/loading";
-
-import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import Loading from '@/components/layout/loading';
+import { Colors, rounded } from '@/components/theme';
+import { Search, TvMinimalPlay, Grip } from 'lucide-react-native';
+import { useEffect, useState } from 'react';
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 export default function StartGameScreen() {
   const [validateEnteredNumber, setValidateEnteredNumber] = useState(false);
 
+  // header state
+  const [isSearchState, setSearchState] = useState(false);
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setValidateEnteredNumber(false);
+      setValidateEnteredNumber(true);
     }, 5000);
 
     return () => clearTimeout(timer);
@@ -16,8 +27,59 @@ export default function StartGameScreen() {
   return !validateEnteredNumber ? (
     <Loading />
   ) : (
-    <View>
-      <Text>hello world</Text>
+    // header
+    <View style={styles.containerWarper}>
+      <View style={styles.containerHeader}>
+        <Pressable
+          onPress={() => {
+            setSearchState(!isSearchState);
+            console.log('press');
+          }}
+        >
+          <Search />
+        </Pressable>
+        <TvMinimalPlay />
+        <Grip />
+      </View>
+      {isSearchState && (
+        <View>
+          <TextInput placeholder="Search..." style={styles.inputSearchStyle} />
+        </View>
+      )}
+      {/* hero */}
+      <Image
+        style={styles.posterStyle}
+        source={require('@/assets/images/posters/poster-hero.png')}
+      />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  containerWarper: {
+    paddingBlock: 15,
+    paddingInline: 10,
+    backgroundColor: Colors.primary,
+    display: 'flex',
+    flexDirection: 'column',
+    gap: 20,
+  },
+  // header
+  containerHeader: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  inputSearchStyle: {
+    borderRadius: rounded.sm,
+    borderWidth: 1,
+    borderColor: Colors.button,
+  },
+  posterStyle: {
+    width: '100%',
+    height: '50%',
+    backgroundSize:"cover",
+    borderRadius:rounded.sm
+  },
+});
