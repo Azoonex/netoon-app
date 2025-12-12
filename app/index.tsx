@@ -1,7 +1,8 @@
-import Loading from '@/components/layout/loading';
-import { Colors, rounded } from '@/components/theme';
-import { Search, TvMinimalPlay, Grip } from 'lucide-react-native';
-import { useEffect, useState } from 'react';
+import CarouselLayout from "@/components/layout/home/carousel-layout";
+import Loading from "@/components/layout/loading";
+import { Colors, rounded } from "@/components/theme";
+import { Search, TvMinimalPlay, Grip } from "lucide-react-native";
+import { useEffect, useState } from "react";
 import {
   Image,
   Pressable,
@@ -9,7 +10,7 @@ import {
   Text,
   TextInput,
   View,
-} from 'react-native';
+} from "react-native";
 export default function StartGameScreen() {
   const [validateEnteredNumber, setValidateEnteredNumber] = useState(false);
 
@@ -30,15 +31,17 @@ export default function StartGameScreen() {
     // header
     <View style={styles.containerWarper}>
       <View style={styles.containerHeader}>
-        <Pressable
-          onPress={() => {
-            setSearchState(!isSearchState);
-            console.log('press');
-          }}
-        >
-          <Search />
-        </Pressable>
-        <TvMinimalPlay />
+        <View style={styles.containerHeader}>
+          <Pressable
+            onPress={() => {
+              setSearchState(!isSearchState);
+              console.log("press");
+            }}
+          >
+            <Search />
+          </Pressable>
+          <TvMinimalPlay />
+        </View>
         <Grip />
       </View>
       {isSearchState && (
@@ -49,8 +52,10 @@ export default function StartGameScreen() {
       {/* hero */}
       <Image
         style={styles.posterStyle}
-        source={require('@/assets/images/posters/poster-hero.png')}
+        source={require("@/assets/images/posters/poster-hero.png")}
       />
+
+      <CarouselLayout />
     </View>
   );
 }
@@ -60,16 +65,17 @@ const styles = StyleSheet.create({
     paddingBlock: 15,
     paddingInline: 10,
     backgroundColor: Colors.primary,
-    display: 'flex',
-    flexDirection: 'column',
+    display: "flex",
+    flexDirection: "column",
     gap: 20,
   },
   // header
   containerHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    gap: 5,
   },
   inputSearchStyle: {
     borderRadius: rounded.sm,
@@ -77,9 +83,9 @@ const styles = StyleSheet.create({
     borderColor: Colors.button,
   },
   posterStyle: {
-    width: '100%',
-    height: '50%',
-    backgroundSize:"cover",
-    borderRadius:rounded.sm
+    width: "100%",
+    height: "50%",
+    backgroundSize: "cover",
+    borderRadius: rounded.sm,
   },
 });
